@@ -53,7 +53,7 @@ const acquireTokenObo = (cca, webApiPort, clientId, authority, discoveryKeysEndp
             jwksUri: discoveryKeysEndpoint,
         });
 
-        client.getSigningKey(header.kid, function (err, key) {
+        client.getSigningKey(header.kid, function (error, key) {
             var signingKey = key.publicKey || key.rsaPublicKey;
             callback(null, signingKey);
         });

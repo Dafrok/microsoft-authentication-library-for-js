@@ -90,9 +90,9 @@ app.get('/acquireToken', async (req, res, next) => {
                  * If no cached refresh token is found or if the refresh token is expired,
                  * we fallback to interactive flow via getAuthCodeUrl -> acquireTokenByCode.
                  */
-                diskCache.find({ userId: req.cookies.userId }, async (err, data) => {
+                diskCache.find({ userId: req.cookies.userId }, async (error, data) => {
                     try {
-                        if (err || !data || !data.length) throw new Error('Could not retrieve user cache');
+                        if (error || !data || !data.length) throw new Error('Could not retrieve user cache');
 
                         /**
                          * You can add the /.default scope suffix to the resource to help migrate your apps
@@ -112,7 +112,7 @@ app.get('/acquireToken', async (req, res, next) => {
                          * Once you successfully acquire an access token using a refresh token,
                          * we recommend to clear the ADAL cache for this user.
                          */
-                        diskCache.remove(data, (err, data) => {
+                        diskCache.remove(data, (error, data) => {
                             if (error) console.error(error)
                             res.send(tokenResponse);
                         })

@@ -145,9 +145,9 @@ function initializePerformanceObserver(): void {
                 fs.appendFile(
                     "benchmarks.json",
                     `${JSON.stringify(results)}\n`,
-                    function (err) {
-                        if (err) {
-                            throw err;
+                    function (error) {
+                        if (error) {
+                            throw error;
                         }
                     }
                 );
@@ -169,7 +169,7 @@ async function initializeRedisClient(): Promise<RedisClientType> {
         },
     });
 
-    redis.on("error", (err: any) => console.log("Redis Client Error", err));
+    redis.on("error", (error: any) => console.log("Redis Client Error", error));
 
     await redis.connect();
     return redis as RedisClientType;
