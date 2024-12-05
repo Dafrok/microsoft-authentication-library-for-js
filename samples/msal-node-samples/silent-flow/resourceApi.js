@@ -20,7 +20,7 @@ module.exports = function(resourceApiConfig) {
             
             axios.default.get(endpoint, options)
                 .then(response => callback(response.data, endpoint))
-                .catch(error => console.log(error));
+                .catch(error => console.error(error));
         }
     }
 };

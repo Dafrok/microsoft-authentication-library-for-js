@@ -36,7 +36,7 @@ const acquireTokenByCode = (cca, webAppPort, webApiPort, redirectUri, webApiScop
         cca.getAuthCodeUrl(authCodeUrlParameters).then((response) => {
             res.redirect(response);
         }).catch((error) => {
-            console.log(JSON.stringify(error))
+            console.error(error.errorMessage);
         });
     });
 
@@ -51,18 +51,16 @@ const acquireTokenByCode = (cca, webAppPort, webApiPort, redirectUri, webApiScop
             console.log("Response received. Calling web API");
             accessToken = response.accessToken;
             callWebApi(response.accessToken, (oboResponse) => {
-                console.log(oboResponse);
                 res.status(200).send(oboResponse);
             });
         }).catch((error) => {
-            console.log(error);
+            console.error(error.errorMessage);
             res.status(500).send(error);
         });
     });
 
     app.get("/oboCall", (req, res) => {
-        callWebApi(accessToken, (oboResponse) => {
-            console.log(oboResponse);
+        callWebApi(accessToken, () => {
             res.sendStatus(200);
         });
     });
@@ -82,8 +80,8 @@ const acquireTokenByCode = (cca, webAppPort, webApiPort, redirectUri, webApiScop
                 callback(chunk);
             });
         });
-        req.on("error", (err) => {
-            console.log(err);
+        req.on("error", (error) => {
+            console.error(error.errorMessage);
         });
         req.end();
     };

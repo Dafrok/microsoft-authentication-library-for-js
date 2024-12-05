@@ -36,15 +36,12 @@ function getClientCredentialsToken(cca, clientCredentialRequestScopes, ro) {
         skipCache: true, // (optional) this skips the cache and forces MSAL to get a new token from Azure AD
     };
 
-    return cca
-        .acquireTokenByClientCredential(clientCredentialRequest)
-        .then((response) => {
-            // Uncomment to see the successful response logged
-            // console.log("Response: ", response);
-        }).catch((error) => {
-            // Uncomment to see the errors logged
-            // console.log(JSON.stringify(error));
-        });
+    try {
+        return cca.acquireTokenByClientCredential(clientCredentialRequest);
+    } catch (error) {
+        console.error(error.errorMessage);
+        throw error.errorMessage;
+    }
 }
 
 /**
@@ -54,11 +51,11 @@ function getClientCredentialsToken(cca, clientCredentialRequestScopes, ro) {
  */
 if(argv.$0 === "index.js") {
     const loggerOptions = {
-        loggerCallback(loglevel, message, containsPii) {
-            console.log(message);
+        loggerCallback(loglevel, message, containsPii) {
+            console.log(message);
         },
-        piiLoggingEnabled: false,
-        logLevel: msal.LogLevel.Verbose,
+        piiLoggingEnabled: false,
+        logLevel: msal.LogLevel.Verbose,
     }
     
     // Build MSAL ClientApplication Configuration object
@@ -69,8 +66,8 @@ if(argv.$0 === "index.js") {
         },
         // Uncomment or comment the code below to enable or disable the MSAL logger respectively
         // system: {
-        //    loggerOptions,
-        // }
+        //    loggerOptions,
+        // }
     };
     
     // Create msal application object

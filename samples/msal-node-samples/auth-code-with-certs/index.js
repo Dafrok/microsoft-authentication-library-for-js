@@ -74,9 +74,10 @@ app.get('/', (req, res) => {
 
     // get url to sign user in and consent to scopes needed for application
     cca.getAuthCodeUrl(authCodeUrlParameters).then((response) => {
-        console.log(response);
         res.redirect(response);
-    }).catch((error) => console.log(JSON.stringify(error)));
+    }).catch((error) => {
+        console.error(error.errorMessage);
+    });
 });
 
 app.post('/redirect', (req, res) => {
@@ -87,10 +88,9 @@ app.post('/redirect', (req, res) => {
     };
 
     cca.acquireTokenByCode(tokenRequest).then((response) => {
-        console.log("\nResponse: \n:", response);
         res.status(200).send('Congratulations! You have signed in successfully');
     }).catch((error) => {
-        console.log(error);
+        console.error(error.errorMessage);
         res.status(500).send(error);
     });
 });

@@ -232,7 +232,9 @@ async function initializeRedisClient(): Promise<RedisClientType> {
         },
     });
 
-    redis.on("error", (err: any) => console.log("Redis Client Error", err));
+    redis.on("error", (error: any) =>
+        console.error("Redis Client Error", error)
+    );
 
     await redis.connect();
     return redis as RedisClientType;

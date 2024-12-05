@@ -12,7 +12,7 @@ async function callMicrosoftGraph(accessToken) {
         const response = await fetch(graphMeEndpoint, options);
         return response.json();
     } catch (error) {
-        console.log(error)
+        console.error(error.errorMessage)
         return error;
     }
 };

@@ -25,7 +25,7 @@ const usernamePasswordRequest = {
 cca.acquireTokenByUsernamePassword(usernamePasswordRequest).then((response) => {
     console.log("acquired token by password grant in confidential clients");
 }).catch((error) => {
-    console.log(error);
+    console.error(error.errorMessage);
 });
 
 

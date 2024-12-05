@@ -65,7 +65,7 @@ app.get('/', async (req, res, next) => {
         const account = await (await cca.getTokenCache()).getAccountByHomeId(req.session.account?.homeAccountId);
 
         if (!account) {
-            console.log('Account not found!');
+            console.error('Account not found!');
             throw new msal.InteractionRequiredAuthError();
         }
 

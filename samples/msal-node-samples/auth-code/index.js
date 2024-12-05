@@ -115,7 +115,9 @@ const getTokenAuthCode = function (scenarioConfig, clientApplication, port) {
          */
         clientApplication.getAuthCodeUrl(authCodeUrlParameters).then((authCodeUrl) => {
             res.redirect(authCodeUrl);
-        }).catch((error) => console.log(JSON.stringify(error)));
+        }).catch((error) => {
+            console.error(error.errorMessage);
+        });
     });
 
     app.get("/redirect", (req, res) => {
@@ -143,7 +145,7 @@ const getTokenAuthCode = function (scenarioConfig, clientApplication, port) {
             console.log("Successfully acquired token using Authorization Code.");
             res.sendStatus(200);
         }).catch((error) => {
-            console.log(error);
+            console.error(error.errorMessage);
             res.status(500).send(error);
         });
     });

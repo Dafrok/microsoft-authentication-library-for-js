@@ -6,8 +6,6 @@ import { ICachePlugin, TokenCacheContext } from "@azure/msal-node";
 import * as fs from "fs";
 import { CACHE_LOCATION } from "./Constants";
 
-
-
 export const cachePlugin = (CACHE_LOCATION: string): ICachePlugin => {
     const beforeCacheAccess = async (cacheContext: TokenCacheContext) => {
         return new Promise<void>(async (resolve, reject) => {
@@ -27,7 +25,7 @@ export const cachePlugin = (CACHE_LOCATION: string): ICachePlugin => {
                     (err) => {
                         if (err) {
                             reject();
-                        } 
+                        }
                     }
                 );
             }
@@ -39,10 +37,10 @@ export const cachePlugin = (CACHE_LOCATION: string): ICachePlugin => {
             fs.writeFile(
                 CACHE_LOCATION,
                 cacheContext.tokenCache.serialize(),
-                (err) => {
-                    if (err) {
-                        console.log(err);
-                    } 
+                (error) => {
+                    if (error) {
+                        console.error(error);
+                    }
                 }
             );
         }
